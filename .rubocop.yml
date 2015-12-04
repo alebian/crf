@@ -1,0 +1,9 @@
+AllCops:
+  Exclude:
+    - crf.gemspec
+
+Documentation:
+  Enabled: true
+
+LineLength:
+  Max: 99

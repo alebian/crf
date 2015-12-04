@@ -1,0 +1,16 @@
+language: ruby
+rvm:
+  - ruby 2.0.0
+
+install:
+  - gem install rubocop
+  - gem install bundler
+  - bundle install --retry=3
+
+script:
+  - bundle exec rspec
+  - rubocop -R --format simple
+
+addons:
+    code_climate:
+        repo_token: 88f54fd198edd11418f1a563d15f0be83c62f5325a313849c842049982a92a8f

@@ -1,3 +1,27 @@
 #!/usr/bin/env ruby
 
 require 'crf'
+require 'optparse'
+
+options = { interactive: false, fast: false }
+
+parser = OptionParser.new do |opts|
+  opts.banner = 'Usage: crf PATH [options]'
+
+  opts.on('-i', '--interactive', 'Command line interactive file removal') do
+    options[:interactive] = true
+  end
+
+  opts.on('-f', '--fast', 'Approximate (faster) version of Crf') do
+    options[:fast] = true
+  end
+
+  opts.on('-h', '--help', 'Displays help') do
+    puts opts
+    exit
+  end
+end
+
+parser.parse!
+
+Crf::Checker.new(ARGV[0], options).check_repeated_files
