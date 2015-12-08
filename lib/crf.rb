@@ -1,4 +1,5 @@
 require 'crf/finder'
+require 'crf/interactive_finder'
 require 'crf/remover'
 require 'crf/interactive_remover'
 require 'logger'
@@ -9,14 +10,26 @@ module Crf
   # This class is the Crf starting point.
   #
   class Checker
+    #
+    # The path where it will look for repetitions, the options provided, the repetitions found,
+    # the space saved and the logger files are accesible from the outside and used in the class.
+    #
     attr_reader :path, :options, :repetitions, :space_saved, :logger
 
+    #
+    # Creates the object saving the directory's path and options provided. Options are set to
+    # default if they are not given. It also creates the logger file.
+    #
     def initialize(path, options = { interactive: false, progress: false })
       @path = path
       @options = options
       initialize_logger
     end
 
+    #
+    # Starting point of Crf. You should call this if you want to check if a directory has
+    # duplicated files inside.
+    #
     def check_repeated_files
       find_repetitions
       return no_repetitions_found if repetitions.empty?
@@ -36,7 +49,8 @@ module Crf
 
     def find_repetitions
       logger.info "Looking for repetitions in #{path}"
-      @repetitions = Crf::Finder.new(path).search_repeated_files(options[:progress])
+      @repetitions = Crf::Finder.new(path).search_repeated_files unless options[:progress]
+      @repetitions = Crf::InteractiveFinder.new(path).search_repeated_files if options[:progress]
     end
 
     def no_repetitions_found

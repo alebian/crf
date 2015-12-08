@@ -4,13 +4,23 @@ module Crf
   # It saves the first element of the repetitions and deletes the rest.
   #
   class Remover
+    #
+    # The repetitions hash and the logger file are accessible from the outside.
+    #
     attr_reader :repetitions, :logger
 
+    #
+    # This object needs the repeated files obtained with Crf::Finder and the logger object.
+    #
     def initialize(repetitions, logger)
       @repetitions = repetitions
       @logger = logger
     end
 
+    #
+    # This method removes all the files contained on each value of the repetitions hash
+    # except the first one. This is done without asking the user for confirmation so be careful.
+    #
     def remove
       saved = 0
       repetitions.each_value do |paths|

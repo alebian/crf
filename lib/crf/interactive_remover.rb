@@ -6,6 +6,10 @@ module Crf
   # It asks the user if he/she wants to remove each file.
   #
   class InteractiveRemover < Crf::Remover
+    #
+    # This method asks the user if he/she wants to delete each of the files contained in the values
+    # of the repetitions hash.
+    #
     def remove
       saved = 0
       repetitions.each_value do |paths|

@@ -8,27 +8,19 @@ module Crf
   # This class finds the paths of all the repeated files inside the path passed as argument.
   # All files repeated have the same file_identifier and file_hash.
   #
-  class Finder
+  class InteractiveFinder < Crf::Finder
     #
-    # The original path provided and the list of files inside it are accessible from the outside.
-    #
-    attr_reader :path, :all_paths
-
-    #
-    # Creates the Finder object with a directory where it will look for duplicate files.
-    # Path is the string representation of the absolute path of the directory.
-    #
-    def initialize(path)
-      @path = path
-    end
-
-    #
-    # Method that looks for the repeated files in the path specified when the object was created.
+    # Method that looks for the repeated files in the path specified when the object was created
+    # showing progress bars.
     #
     def search_repeated_files
       repetitions_list = Crf::RepetitionsList.new
-      all_files(path).each do |file_path|
+      all_paths = all_files(path)
+      progressbar = ProgressBar.create(title: 'First run', total: all_paths.count,
+                                       format: '%t: %c/%C %a |%B| %%%P')
+      all_paths.each do |file_path|
         repetitions_list.add(file_identifier(file_path), file_path)
+        progressbar.increment
       end
       return repetitions_list.repetitions if repetitions_list.repetitions.empty?
       confirm(repetitions_list)
@@ -36,28 +28,17 @@ module Crf
 
     private
 
-    def all_files(path)
-      paths = []
-      Find.find(path) { |p| paths << p unless File.directory?(p) }
-      paths
-    end
-
-    def file_identifier(path)
-      File.size(path).to_s
-    end
-
     def confirm(repetitions_list)
+      progressbar = ProgressBar.create(title: 'Second run', format: '%t: %c/%C %a |%B| %%%P',
+                                       total: repetitions_list.total_repetitions)
       confirmed_repetitions_list = Crf::RepetitionsList.new
       repetitions_list.repetitions.values.each do |repeated_array|
         repeated_array.each do |file_path|
           confirmed_repetitions_list.add(file_hash(file_path), file_path)
+          progressbar.increment
         end
       end
       confirmed_repetitions_list.repetitions
-    end
-
-    def file_hash(path)
-      Digest::SHA256.file(path).hexdigest
     end
   end
 end

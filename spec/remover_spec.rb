@@ -24,17 +24,17 @@ describe 'Crf Remover' do
       paths = []
       Find.find(test_files_directory) { |p| paths << p unless File.directory?(p) }
       expect(paths.length).to eq(4)
-      Crf::Remover.new(finder.search_repeated_files(false), logger).remove
+      Crf::Remover.new(finder.search_repeated_files, logger).remove
       paths = []
       Find.find(test_files_directory) { |p| paths << p unless File.directory?(p) }
       expect(paths.length).to eq(3)
-      expect(finder.search_repeated_files(false).empty?).to be_truthy
+      expect(finder.search_repeated_files.empty?).to be_truthy
     end
 
     it 'does not remove unique files' do
-      repetitions = finder.search_repeated_files(false)
+      repetitions = finder.search_repeated_files
       Crf::Remover.new(repetitions, logger).remove
-      repetitions = finder.search_repeated_files(false)
+      repetitions = finder.search_repeated_files
       expect(repetitions.length).to eq(0)
     end
   end

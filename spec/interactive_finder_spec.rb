@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Crf Finder' do
+describe 'Crf InteractiveFinder' do
   let!(:test_files_directory) { './spec/test_files/' }
   let!(:file_1_path) { "#{test_files_directory}file_1.test" }
   let!(:file_2_path) { "#{test_files_directory}file_2.test" }
@@ -9,7 +9,7 @@ describe 'Crf Finder' do
   let!(:unique_text) { 'This text will be in 1 file' }
 
   describe 'finding files' do
-    let!(:finder) { Crf::Finder.new(test_files_directory) }
+    let!(:finder) { Crf::InteractiveFinder.new(test_files_directory) }
 
     before :each do
       Dir.mkdir(test_files_directory) unless File.exist?(test_files_directory)
