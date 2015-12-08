@@ -3,6 +3,8 @@
 
 *.log
 .byebug_history
+/spec/test_files
+*.test
 
 ### Ruby ###
 *.gem
