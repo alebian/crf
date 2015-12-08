@@ -3,17 +3,17 @@
 require 'crf'
 require 'optparse'
 
-options = { interactive: false, fast: false }
+options = { interactive: false, progress: false }
 
 parser = OptionParser.new do |opts|
-  opts.banner = 'Usage: crf PATH [options]'
+  opts.banner = 'Usage: crf PATH [-i] [-p]'
 
   opts.on('-i', '--interactive', 'Command line interactive file removal') do
     options[:interactive] = true
   end
 
-  opts.on('-f', '--fast', 'Approximate (faster) version of Crf') do
-    options[:fast] = true
+  opts.on('-p', '--progress', 'Show a progress bar while executing') do
+    options[:progress] = true
   end
 
   opts.on('-h', '--help', 'Displays help') do

@@ -1,7 +1,7 @@
 require 'colorize'
 
 module Crf
-  ##
+  #
   # This is a subclass of Crf::Remover.
   # It asks the user if he/she wants to remove each file.
   #

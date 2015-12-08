@@ -1,5 +1,5 @@
 module Crf
-  ##
+  #
   # This class removes all the repetitions passed as an argument.
   # It saves the first element of the repetitions and deletes the rest.
   #

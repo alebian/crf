@@ -1,5 +1,5 @@
 module Crf
-  ##
+  #
   # This is the data structure used to get the repeated files.
   #
   class RepetitionsList

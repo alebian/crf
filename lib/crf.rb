@@ -1,18 +1,17 @@
 require 'crf/finder'
-require 'crf/fast_finder'
 require 'crf/remover'
 require 'crf/interactive_remover'
 require 'logger'
 require 'colorize'
 
 module Crf
-  ##
+  #
   # This class is the Crf starting point.
   #
   class Checker
     attr_reader :path, :options, :repetitions, :space_saved, :logger
 
-    def initialize(path, options)
+    def initialize(path, options = { interactive: false, progress: false })
       @path = path
       @options = options
       initialize_logger
@@ -37,8 +36,7 @@ module Crf
 
     def find_repetitions
       logger.info "Looking for repetitions in #{path}"
-      @repetitions = Crf::Finder.new(path).search_repeated_files unless options[:fast]
-      @repetitions = Crf::FastFinder.new(path).search_repeated_files if options[:fast]
+      @repetitions = Crf::Finder.new(path).search_repeated_files(options[:progress])
     end
 
     def no_repetitions_found
@@ -50,13 +48,25 @@ module Crf
       logger.info "Repetitions found: #{repetitions.values}"
       remove_repetitions
       logger.info "Saved a total of #{space_saved} bytes"
-      STDOUT.puts "You saved a total of #{space_saved} bytes".blue
+      STDOUT.puts "You saved a total of #{number_to_human_size(space_saved)}".blue
     end
 
     def remove_repetitions
       remover = Crf::Remover.new(repetitions, logger) unless options[:interactive]
       remover = Crf::InteractiveRemover.new(repetitions, logger) if options[:interactive]
       @space_saved = remover.remove
+    end
+
+    def number_to_human_size(size)
+      if size < 1024
+        "#{size} bytes"
+      elsif size < 1_048_576
+        "#{(size.to_f / 1024).round(2)} KB"
+      elsif size < 1_073_741_824
+        "#{(size.to_f / 1_048_576).round(2)} MB"
+      else
+        "#{(size.to_f / 1_073_741_824).round(2)} GB"
+      end
     end
   end
 end
