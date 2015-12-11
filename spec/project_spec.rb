@@ -5,7 +5,7 @@ describe 'Crf Project' do
     let(:version) { Crf::VERSION }
 
     it 'is the correct version' do
-      expect(version).to eq('0.0.3')
+      expect(version).to eq('0.0.5')
     end
   end
 end

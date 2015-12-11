@@ -2,7 +2,7 @@ require 'crf/finder'
 require 'crf/interactive_finder'
 require 'crf/remover'
 require 'crf/interactive_remover'
-require 'logger'
+require 'crf/logger'
 require 'colorize'
 
 module Crf
@@ -20,10 +20,10 @@ module Crf
     # Creates the object saving the directory's path and options provided. Options are set to
     # default if they are not given. It also creates the logger file.
     #
-    def initialize(path, options = { interactive: false, progress: false })
+    def initialize(path, options = { interactive: false, progress: false, fast: false })
       @path = path
       @options = options
-      initialize_logger
+      @logger = Crf::Logger.new
     end
 
     #
@@ -38,19 +38,14 @@ module Crf
 
     private
 
-    def initialize_logger
-      @logger = Logger.new('crf.log', File::CREAT)
-      logger.datetime_format = '%Y-%m-%d %H:%M:%S'
-      logger.progname = 'CRF'
-      logger.formatter = proc do |_severity, datetime, progname, msg|
-        "[#{datetime}] #{progname}: #{msg}\n"
-      end
-    end
-
     def find_repetitions
       logger.info "Looking for repetitions in #{path}"
-      @repetitions = Crf::Finder.new(path).search_repeated_files unless options[:progress]
-      @repetitions = Crf::InteractiveFinder.new(path).search_repeated_files if options[:progress]
+      if options[:progress]
+        finder = Crf::InteractiveFinder.new(path, options[:fast])
+      else
+        finder = Crf::Finder.new(path, options[:fast])
+      end
+      @repetitions = finder.search_repeated_files
     end
 
     def no_repetitions_found

@@ -29,7 +29,7 @@ Or install it yourself as:
 After installing the gem, you can use it in your command line:
 
 ```
-crf PATH [-i] [-p]
+crf PATH [-i] [-p] [-f]
 ```
 Or you can use it in any ruby code you want:
 
@@ -37,7 +37,7 @@ Or you can use it in any ruby code you want:
 require 'crf'
 
 path = './test'
-options = { interactive: true, progress: true }
+options = { interactive: true, progress: true, fast: false }
 
 crf_checker = Crf::Checker.new(path, options)
 crf_checker.check_repeated_files
@@ -46,6 +46,8 @@ crf_checker.check_repeated_files
 The -i, --interactive option lets you control the deletion of the files. In the command line you will be asked for every repetition if you want to delete it or not.
 
 The -p, --progress option shows a progress while looking for duplicates.
+
+The -f, --fast option only checks if the files have the same size (is faster but it does not mean that the files are duplicates).
 
 ## Contributing
 

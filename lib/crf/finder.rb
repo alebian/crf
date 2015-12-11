@@ -12,43 +12,55 @@ module Crf
     #
     # The original path provided and the list of files inside it are accessible from the outside.
     #
-    attr_reader :path, :all_paths
+    attr_reader :path
 
     #
     # Creates the Finder object with a directory where it will look for duplicate files.
     # Path is the string representation of the absolute path of the directory.
     #
-    def initialize(path)
+    def initialize(path, fast = false)
       @path = path
+      @fast = fast
     end
 
     #
     # Method that looks for the repeated files in the path specified when the object was created.
     #
     def search_repeated_files
-      repetitions_list = Crf::RepetitionsList.new
-      all_files(path).each do |file_path|
-        repetitions_list.add(file_identifier(file_path), file_path)
-      end
-      return repetitions_list.repetitions if repetitions_list.repetitions.empty?
-      confirm(repetitions_list)
+      repetitions = first_run
+      return repetitions if repetitions.empty? || @fast
+      second_run(repetitions)
     end
 
     private
 
     def all_files(path)
-      paths = []
+      paths ||= []
       Find.find(path) { |p| paths << p unless File.directory?(p) }
       paths
+    end
+
+    #
+    # This looks for the files with the same size only
+    #
+    def first_run
+      repetitions_list = Crf::RepetitionsList.new
+      all_files(path).each do |file_path|
+        repetitions_list.add(file_identifier(file_path), file_path)
+      end
+      repetitions_list.repetitions
     end
 
     def file_identifier(path)
       File.size(path).to_s
     end
 
-    def confirm(repetitions_list)
+    #
+    # After finding files with the same size, perform a deeper analysis of those
+    #
+    def second_run(repetitions)
       confirmed_repetitions_list = Crf::RepetitionsList.new
-      repetitions_list.repetitions.values.each do |repeated_array|
+      repetitions.values.each do |repeated_array|
         repeated_array.each do |file_path|
           confirmed_repetitions_list.add(file_hash(file_path), file_path)
         end

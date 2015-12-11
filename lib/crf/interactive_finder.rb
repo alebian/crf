@@ -1,6 +1,4 @@
 require 'crf/repetitions_list'
-require 'digest'
-require 'find'
 require 'ruby-progressbar'
 
 module Crf
@@ -14,21 +12,29 @@ module Crf
     # showing progress bars.
     #
     def search_repeated_files
-      repetitions_list = Crf::RepetitionsList.new
       all_paths = all_files(path)
       progressbar = ProgressBar.create(title: 'First run', total: all_paths.count,
                                        format: '%t: %c/%C %a |%B| %%%P')
-      all_paths.each do |file_path|
-        repetitions_list.add(file_identifier(file_path), file_path)
-        progressbar.increment
-      end
-      return repetitions_list.repetitions if repetitions_list.repetitions.empty?
-      confirm(repetitions_list)
+      repetitions_list = first_run(progressbar)
+      return repetitions_list.repetitions if repetitions_list.repetitions.empty? || @fast
+      second_run(repetitions_list)
     end
 
     private
 
-    def confirm(repetitions_list)
+    #
+    # This looks for the files with the same size only
+    #
+    def first_run(progressbar)
+      repetitions_list = Crf::RepetitionsList.new
+      all_files(path).each do |file_path|
+        repetitions_list.add(file_identifier(file_path), file_path)
+        progressbar.increment
+      end
+      repetitions_list
+    end
+
+    def second_run(repetitions_list)
       progressbar = ProgressBar.create(title: 'Second run', format: '%t: %c/%C %a |%B| %%%P',
                                        total: repetitions_list.total_repetitions)
       confirmed_repetitions_list = Crf::RepetitionsList.new
