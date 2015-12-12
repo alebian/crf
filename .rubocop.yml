@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - crf.gemspec
+    - bin/crf
 
 Documentation:
   Enabled: true

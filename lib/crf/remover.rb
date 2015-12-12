@@ -46,7 +46,7 @@ module Crf
     end
 
     def log_removal(path, size)
-      logger.info "Removed #{path}, size: #{size} bytes"
+      logger.write "Removed #{path}, size: #{size} bytes"
     end
   end
 end

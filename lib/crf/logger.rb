@@ -16,7 +16,7 @@ module Crf
     #
     # Wrapper of the Logger info method
     #
-    def info(msg)
+    def write(msg)
       @logger.info msg
     end
 

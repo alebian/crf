@@ -30,9 +30,9 @@ module Crf
 
     def remove_confirmation(path)
       STDOUT.print "Do you want to delete the file #{path}? [y/n] ".yellow
-      logger.info "Asking to remove #{path}"
+      logger.write "Asking to remove #{path}"
       answer = STDIN.gets.chomp
-      logger.info "User input: #{answer}"
+      logger.write "User input: #{answer}"
       if answer == 'y'
         STDOUT.puts "Removed #{path}".red
         return remove_file(path)

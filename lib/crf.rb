@@ -11,10 +11,10 @@ module Crf
   #
   class Checker
     #
-    # The path where it will look for repetitions, the options provided, the repetitions found,
-    # the space saved and the logger files are accesible from the outside and used in the class.
+    # The path where it will look for repetitions, the options provided, the repetitions found
+    # and the logger files are accesible from the outside and used in the class.
     #
-    attr_reader :path, :options, :repetitions, :space_saved, :logger
+    attr_reader :path, :options, :repetitions, :logger
 
     #
     # Creates the object saving the directory's path and options provided. Options are set to
@@ -39,7 +39,7 @@ module Crf
     private
 
     def find_repetitions
-      logger.info "Looking for repetitions in #{path}"
+      logger.write "Looking for repetitions in #{path}"
       if options[:progress]
         finder = Crf::InteractiveFinder.new(path, options[:fast])
       else
@@ -49,21 +49,21 @@ module Crf
     end
 
     def no_repetitions_found
-      logger.info 'No repetitions found'
+      logger.write 'No repetitions found'
       STDOUT.puts 'No repetitions found'.blue
     end
 
     def repetitions_found
-      logger.info "Repetitions found: #{repetitions.values}"
-      remove_repetitions
-      logger.info "Saved a total of #{space_saved} bytes"
+      logger.write "Repetitions found: #{repetitions.values}"
+      space_saved = remove_repetitions
+      logger.write "Saved a total of #{space_saved} bytes"
       STDOUT.puts "You saved a total of #{number_to_human_size(space_saved)}".blue
     end
 
     def remove_repetitions
       remover = Crf::Remover.new(repetitions, logger) unless options[:interactive]
       remover = Crf::InteractiveRemover.new(repetitions, logger) if options[:interactive]
-      @space_saved = remover.remove
+      remover.remove
     end
 
     def number_to_human_size(size)

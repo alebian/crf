@@ -46,7 +46,7 @@ module Crf
     def first_run
       repetitions_list = Crf::RepetitionsList.new
       all_files(path).each do |file_path|
-        repetitions_list.add(file_identifier(file_path), file_path)
+        repetitions_list.add(file_identifier(file_path).freeze, file_path)
       end
       repetitions_list.repetitions
     end
@@ -62,7 +62,7 @@ module Crf
       confirmed_repetitions_list = Crf::RepetitionsList.new
       repetitions.values.each do |repeated_array|
         repeated_array.each do |file_path|
-          confirmed_repetitions_list.add(file_hash(file_path), file_path)
+          confirmed_repetitions_list.add(file_hash(file_path).freeze, file_path)
         end
       end
       confirmed_repetitions_list.repetitions

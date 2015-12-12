@@ -3,10 +3,10 @@
 require 'crf'
 require 'optparse'
 
-options = { interactive: false, progress: false, fast: false }
+options = { interactive: true, progress: true, fast: false }
 
 parser = OptionParser.new do |opts|
-  opts.banner = 'Usage: crf PATH [-i] [-p]'
+  opts.banner = 'Usage: crf PATH [-i] [-p] [-f] [-n] [-o]'
 
   opts.on('-i', '--interactive', 'Commandline interactive file removal') do
     options[:interactive] = true
@@ -20,6 +20,14 @@ parser = OptionParser.new do |opts|
     options[:fast] = true
   end
 
+  opts.on('-n', '--no-interactive', 'Saves the first file and removes all the repetitions without asking') do
+    options[:interactive] = false
+  end
+
+  opts.on('-o', '--no-progress', 'Hides the progress bar while executing') do
+    options[:progress] = false
+  end
+
   opts.on('-h', '--help', 'Displays help') do
     puts opts
     exit
@@ -28,4 +36,8 @@ end
 
 parser.parse!
 
-Crf::Checker.new(ARGV[0], options).check_repeated_files
+if !ARGV[0].nil? && File.directory?(ARGV[0])
+  Crf::Checker.new(ARGV[0], options).check_repeated_files
+else
+  STDOUT.puts 'No directory specified.'
+end
