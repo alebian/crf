@@ -1,6 +1,5 @@
 require 'crf/repetitions_list'
 require 'digest'
-require 'find'
 require 'ruby-progressbar'
 
 module Crf
@@ -36,7 +35,7 @@ module Crf
 
     def all_files(path)
       paths ||= []
-      Find.find(path) { |p| paths << p unless File.directory?(p) }
+      Dir["#{path.chomp('/')}/*"].each { |p| paths << p unless File.directory?(p) }
       paths
     end
 
