@@ -35,7 +35,7 @@ module Crf
 
     def all_files(path)
       paths ||= []
-      Dir["#{path.chomp('/')}/*"].each { |p| paths << p unless File.directory?(p) }
+      Dir["#{path.chomp('/')}/**/*"].each { |p| paths << p unless File.directory?(p) }
       paths
     end
 

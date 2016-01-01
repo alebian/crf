@@ -25,11 +25,11 @@ describe 'Crf Remover' do
 
     it 'finds the repetitions and removes them' do
       paths = []
-      Dir["#{test_files_directory}*"].each { |p| paths << p unless File.directory?(p) }
+      Dir["#{test_files_directory}**/*"].each { |p| paths << p unless File.directory?(p) }
       expect(paths.length).to eq(5)
       Crf::Remover.new(finder.search_repeated_files, logger).remove
       paths = []
-      Dir["#{test_files_directory}*"].each { |p| paths << p unless File.directory?(p) }
+      Dir["#{test_files_directory}**/*"].each { |p| paths << p unless File.directory?(p) }
       expect(paths.length).to eq(4)
       expect(finder.search_repeated_files.empty?).to be_truthy
     end
