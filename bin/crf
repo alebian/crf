@@ -6,15 +6,7 @@ require 'optparse'
 options = { interactive: true, progress: true, fast: false }
 
 parser = OptionParser.new do |opts|
-  opts.banner = 'Usage: crf PATH [-i] [-p] [-f] [-n] [-o]'
-
-  opts.on('-i', '--interactive', 'Commandline interactive file removal') do
-    options[:interactive] = true
-  end
-
-  opts.on('-p', '--progress', 'Show a progress bar while executing') do
-    options[:progress] = true
-  end
+  opts.banner = 'Usage: crf PATH [-f] [-n] [-o]'
 
   opts.on('-f', '--fast', 'Only checks for files of the same size') do
     options[:fast] = true
