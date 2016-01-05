@@ -1,10 +1,10 @@
 # CRF - Check Repeated Files
 [![Gem Version](https://badge.fury.io/rb/crf.svg)](https://badge.fury.io/rb/crf)
-[![Dependency Status](https://gemnasium.com/alebian/crf-ruby.svg)](https://gemnasium.com/alebian/crf-ruby)
-[![Build Status](https://travis-ci.org/alebian/crf-ruby.svg)](https://travis-ci.org/alebian/crf-ruby)
-[![Code Climate](https://codeclimate.com/github/alebian/crf-ruby/badges/gpa.svg)](https://codeclimate.com/github/alebian/crf-ruby)
-[![Test Coverage](https://codeclimate.com/github/alebian/crf-ruby/badges/coverage.svg)](https://codeclimate.com/github/alebian/crf-ruby/coverage)
-[![Inline docs](http://inch-ci.org/github/alebian/crf-ruby.svg)](http://inch-ci.org/github/alebian/crf-ruby)
+[![Dependency Status](https://gemnasium.com/alebian/crf.svg)](https://gemnasium.com/alebian/crf)
+[![Build Status](https://travis-ci.org/alebian/crf.svg)](https://travis-ci.org/alebian/crf)
+[![Code Climate](https://codeclimate.com/github/alebian/crf/badges/gpa.svg)](https://codeclimate.com/github/alebian/crf)
+[![Test Coverage](https://codeclimate.com/github/alebian/crf/badges/coverage.svg)](https://codeclimate.com/github/alebian/crf/coverage)
+[![Inline docs](http://inch-ci.org/github/alebian/crf.svg)](http://inch-ci.org/github/alebian/crf)
 
 This gem finds exact duplicate files inside a given directory and all sub directories. The result of the execution gets stored in a file called crf_log.txt. The execution time depends on the amount of files and each size, so be careful (or patient). You have options to run an approximated version of the algorithm which is faster but more inaccurate.
 
