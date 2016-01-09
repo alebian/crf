@@ -11,7 +11,7 @@ module Crf
     #
     # The original path provided and the list of files inside it are accessible from the outside.
     #
-    attr_reader :path
+    attr_reader :path, :paths, :repetitions
 
     #
     # Creates the Finder object with a directory where it will look for duplicate files.
@@ -34,8 +34,8 @@ module Crf
     private
 
     def all_files(path)
-      paths ||= []
-      Dir["#{path.chomp('/')}/**/*"].each { |p| paths << p unless File.directory?(p) }
+      @paths = []
+      Dir["#{path.chomp('/')}/**/*"].each { |p| paths << p.freeze unless File.directory?(p) }
       paths
     end
 
@@ -47,7 +47,7 @@ module Crf
       all_files(path).each do |file_path|
         repetitions_list.add(file_identifier(file_path).freeze, file_path)
       end
-      repetitions_list.repetitions
+      @repetitions = repetitions_list.repetitions
     end
 
     def file_identifier(path)
@@ -64,7 +64,7 @@ module Crf
           confirmed_repetitions_list.add(file_hash(file_path).freeze, file_path)
         end
       end
-      confirmed_repetitions_list.repetitions
+      @repetitions = confirmed_repetitions_list.repetitions
     end
 
     def file_hash(path)

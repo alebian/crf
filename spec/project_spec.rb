@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Crf Project' do
-  describe 'version' do
+  context 'when checking the gem version' do
     let(:version) { Crf::VERSION }
 
     it 'is the correct version' do

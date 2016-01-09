@@ -3,6 +3,7 @@ require 'crf/interactive_finder'
 require 'crf/remover'
 require 'crf/interactive_remover'
 require 'crf/logger'
+require 'crf/configuration'
 require 'colorize'
 
 module Crf

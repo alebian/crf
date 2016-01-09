@@ -15,9 +15,9 @@ module Crf
       all_paths = all_files(path)
       progressbar = ProgressBar.create(title: 'First run', total: all_paths.count,
                                        format: '%t: %c/%C %a |%B| %%%P')
-      repetitions_list = first_run(progressbar)
-      return repetitions_list.repetitions if repetitions_list.repetitions.empty? || @fast
-      second_run(repetitions_list)
+      rep_list = first_run(progressbar)
+      return @repetitions = rep_list.repetitions if rep_list.repetitions.empty? || @fast
+      second_run(rep_list)
     end
 
     private
@@ -44,7 +44,7 @@ module Crf
           progressbar.increment
         end
       end
-      confirmed_repetitions_list.repetitions
+      @repetitions = confirmed_repetitions_list.repetitions
     end
   end
 end

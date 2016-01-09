@@ -23,8 +23,8 @@ module Crf
     private
 
     def configurate_logger
-      @logger.datetime_format = '%Y-%m-%d %H:%M:%S'
-      @logger.progname = 'CRF'
+      @logger.datetime_format = Crf::LOGGER_DATE_TIME_FORMAT
+      @logger.progname = Crf::GEM_NAME
       @logger.formatter = proc do |_severity, datetime, progname, msg|
         "[#{datetime}] #{progname}: #{msg}\n"
       end
