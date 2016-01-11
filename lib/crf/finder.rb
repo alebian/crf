@@ -17,26 +17,39 @@ module Crf
     # Creates the Finder object with a directory where it will look for duplicate files.
     # Path is the string representation of the absolute path of the directory.
     #
-    def initialize(path, fast = false)
+    def initialize(path, fast = false, exhaustive = false)
       @path = path
       @fast = fast
+      @exhaustive = exhaustive
     end
 
     #
     # Method that looks for the repeated files in the path specified when the object was created.
     #
     def search_repeated_files
-      repetitions = first_run
+      @repetitions = first_run
       return repetitions if repetitions.empty? || @fast
-      second_run(repetitions)
+      @repetitions = second_run(repetitions)
+      return repetitions if repetitions.empty? || !@exhaustive
+      @repetitions = third_run(repetitions)
     end
 
     private
 
+    #
+    # Gets all file paths in the given directory and subdirectories.
+    #
     def all_files(path)
       @paths = []
-      Dir["#{path.chomp('/')}/**/*"].each { |p| paths << p.freeze unless File.directory?(p) }
+      Dir["#{path.chomp('/')}/**/*"].each { |p| paths << p.freeze if file?(p) }
       paths
+    end
+
+    #
+    # Checks if the file is not a symlink or a directory.
+    #
+    def file?(path)
+      !File.directory?(path) && !File.symlink?(path)
     end
 
     #
@@ -47,7 +60,7 @@ module Crf
       all_files(path).each do |file_path|
         repetitions_list.add(file_identifier(file_path).freeze, file_path)
       end
-      @repetitions = repetitions_list.repetitions
+      repetitions_list.repetitions
     end
 
     def file_identifier(path)
@@ -58,17 +71,30 @@ module Crf
     # After finding files with the same size, perform a deeper analysis of those
     #
     def second_run(repetitions)
-      confirmed_repetitions_list = Crf::RepetitionsList.new
+      repetitions_list = Crf::RepetitionsList.new
       repetitions.values.each do |repeated_array|
         repeated_array.each do |file_path|
-          confirmed_repetitions_list.add(file_hash(file_path).freeze, file_path)
+          repetitions_list.add(file_hash(file_path).freeze, file_path)
         end
       end
-      @repetitions = confirmed_repetitions_list.repetitions
+      repetitions_list.repetitions
+    end
+
+    #
+    # After finding files with the same size, perform a deeper analysis of those
+    #
+    def third_run(repetitions)
+      repetitions_list = Crf::RepetitionsList.new
+      repetitions.values.each do |repeated_array|
+      end
+      repetitions_list.repetitions
     end
 
     def file_hash(path)
       Digest::SHA256.file(path).hexdigest
+    end
+
+    def compare_bytes(file_paths)
     end
   end
 end

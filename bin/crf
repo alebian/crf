@@ -3,12 +3,16 @@
 require 'crf'
 require 'optparse'
 
-options = { interactive: true, progress: true, fast: false }
+options = { interactive: true, progress: true, fast: false, exhaustive: false }
 
 parser = OptionParser.new do |opts|
   opts.banner = 'Usage: crf PATH [-f] [-n] [-o]'
 
   opts.on('-f', '--fast', 'Only checks for files of the same size') do
+    options[:fast] = true
+  end
+
+  opts.on('-e', '--exhaustive', 'Checks every byte of the files (unnecesary in most cases)') do
     options[:fast] = true
   end
 

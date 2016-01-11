@@ -21,7 +21,8 @@ module Crf
     # Creates the object saving the directory's path and options provided. Options are set to
     # default if they are not given. It also creates the logger file.
     #
-    def initialize(path, options = { interactive: false, progress: false, fast: false })
+    def initialize(path, options = { interactive: false, progress: false, fast: false,
+                                     exhaustive: false })
       @path = path
       @options = options
       @logger = Crf::Logger.new

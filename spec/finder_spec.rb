@@ -16,7 +16,9 @@ describe 'Crf Finder' do
   let!(:repeated_text)  { 'This text will be in 4 files' }
   let!(:unique_text)    { 'This text will be in 1  file' }
   let!(:same_size_text) { 'This text has the same  size' }
-
+  before do
+    FileUtils.rm_rf(test_files_directories.first) if File.exist?(test_files_directories.first)
+  end
   context 'when finding files' do
     let!(:finder)                  { Crf::Finder.new(test_files_directories.first) }
     let!(:fast_finder)             { Crf::Finder.new(test_files_directories.first, true) }
@@ -30,10 +32,9 @@ describe 'Crf Finder' do
         Dir.mkdir(dir) unless File.exist?(dir)
       end
       File.open(file_paths[0], 'w+') { |file| file.write(unique_text) }
-      File.open(file_paths[1], 'w+') { |file| file.write(repeated_text) }
-      File.open(file_paths[2], 'w+') { |file| file.write(repeated_text) }
-      File.open(file_paths[3], 'w+') { |file| file.write(repeated_text) }
-      File.open(file_paths[4], 'w+') { |file| file.write(repeated_text) }
+      (1..4).each do |index|
+        File.open(file_paths[index], 'w+') { |file| file.write(repeated_text) }
+      end
       File.open(file_paths[5], 'w+') { |file| file.write(same_size_text) }
     end
 
