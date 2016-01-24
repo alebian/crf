@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Crf RepetitionsList' do
   let!(:list) { Crf::RepetitionsList.new }
-  let!(:path_1) { '/test/path/file' }
+  let!(:path_1) { FILE_PATHS[0] }
   let!(:path_2) { path_1 }
 
   context 'when adding items' do

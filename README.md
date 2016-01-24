@@ -29,7 +29,7 @@ Or install it yourself as:
 After installing the gem, you can use it in your command line:
 
 ```
-crf PATH [-f] [-e] [-n] [-o]
+crf PATH [-f] [-n] [-o]
 ```
 Or you can use it in any ruby code you want:
 
@@ -45,13 +45,11 @@ crf_checker.check_repeated_files
 
 The -f, --fast option only checks if the files have the same size (is faster but it does not mean that the files are duplicates).
 
-The -e, --exhaustive option compares every byte of the files (unnecesary in most cases).
-
 The -n, --no-interactive option will save the first file of the repetitions and remove the rest of the duplicates without asking.
 
 The -o, --no-progress option will make CRF run without showing the progress bar.
 
-The default version compares the size and SHA256 checksums of the files (which is more than enough in most cases), however if you feel unsure about this option you can run the exhaustive version and get %100 result. When using the crf command directly on the command line the interactive and progress bar options are enabled by default. But, when using the class directly on ruby code, these options are disabled by default.
+The default version compares the size and SHA256 checksums of the files (which is more than enough in most cases). When using the crf command directly on the command line the interactive and progress bar options are enabled by default. But, when using the class directly on ruby code, these options are disabled by default.
 
 ## Contributing
 

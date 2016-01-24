@@ -1,41 +1,19 @@
 require 'spec_helper'
 
-def delete_logger
-  File.delete('./spec/test_files/crf.log') if File.exist?('./spec/test_files/crf.log')
-end
-
 describe 'Crf Finder' do
-  let!(:test_files_directories) do
-    ['./spec/test_files', './spec/test_files/sub', './spec/test_files/sub/sub']
-  end
-  let!(:file_paths) do
-    ["#{test_files_directories.first}/file_1.test", "#{test_files_directories.first}/file_2.test",
-     "#{test_files_directories.first}/file_3.test", "#{test_files_directories[1]}/file_4.test",
-     "#{test_files_directories[2]}/file_5.test", "#{test_files_directories.first}/file_6.test"]
-  end
-  let!(:repeated_text)  { 'This text will be in 4 files' }
-  let!(:unique_text)    { 'This text will be in 1  file' }
-  let!(:same_size_text) { 'This text has the same  size' }
   before do
-    FileUtils.rm_rf(test_files_directories.first) if File.exist?(test_files_directories.first)
+    FileUtils.rm_rf(FILE_DIRECTORIES.first) if File.exist?(FILE_DIRECTORIES.first)
   end
   context 'when finding files' do
-    let!(:finder)                  { Crf::Finder.new(test_files_directories.first) }
-    let!(:fast_finder)             { Crf::Finder.new(test_files_directories.first, true) }
-    let!(:interactive_finder)      { Crf::InteractiveFinder.new(test_files_directories.first) }
+    let!(:finder)                  { Crf::Finder.new(FILE_DIRECTORIES.first) }
+    let!(:fast_finder)             { Crf::Finder.new(FILE_DIRECTORIES.first, true) }
+    let!(:interactive_finder)      { Crf::InteractiveFinder.new(FILE_DIRECTORIES.first) }
     let!(:interactive_fast_finder) do
-      Crf::InteractiveFinder.new(test_files_directories.first, true)
+      Crf::InteractiveFinder.new(FILE_DIRECTORIES.first, true)
     end
 
     before do
-      test_files_directories.each do |dir|
-        Dir.mkdir(dir) unless File.exist?(dir)
-      end
-      File.open(file_paths[0], 'w+') { |file| file.write(unique_text) }
-      (1..4).each do |index|
-        File.open(file_paths[index], 'w+') { |file| file.write(repeated_text) }
-      end
-      File.open(file_paths[5], 'w+') { |file| file.write(same_size_text) }
+      create_test_files
     end
 
     context 'when using all finders' do
@@ -48,22 +26,22 @@ describe 'Crf Finder' do
         interactive_fast_finder.search_repeated_files
         delete_logger
         fast_finder.search_repeated_files
-        expect(interactive_finder.paths.size).to eq(file_paths.size)
-        expect(finder.paths.size).to eq(file_paths.size)
-        expect(interactive_fast_finder.paths.size).to eq(file_paths.size)
-        expect(fast_finder.paths.size).to eq(file_paths.size)
+        expect(interactive_finder.paths.size).to eq(FILE_PATHS.size)
+        expect(finder.paths.size).to eq(FILE_PATHS.size)
+        expect(interactive_fast_finder.paths.size).to eq(FILE_PATHS.size)
+        expect(fast_finder.paths.size).to eq(FILE_PATHS.size)
       end
     end
     context 'when using the fast finders' do
       context 'when using the non interactive finder' do
         it 'finds size repetitions' do
-          expect(fast_finder.search_repeated_files.values.first.count).to eq(file_paths.size)
+          expect(fast_finder.search_repeated_files.values.first.count).to eq(FILE_PATHS.size)
         end
       end
       context 'when using the interactive finder' do
         it 'finds size repetitions' do
           expect(interactive_fast_finder.search_repeated_files.values.first.count)
-            .to eq(file_paths.size)
+            .to eq(FILE_PATHS.size)
         end
       end
     end
@@ -76,9 +54,9 @@ describe 'Crf Finder' do
           repetitions = finder.search_repeated_files
           expect(repetitions.length).to eq(1)
           repetitions = repetitions.values.first
-          expect(repetitions).not_to include(file_paths[0], file_paths[5])
-          expect(repetitions).to include(file_paths[1], file_paths[2], file_paths[3],
-                                         file_paths[4])
+          expect(repetitions).not_to include(FILE_PATHS[0], FILE_PATHS[5])
+          expect(repetitions).to include(FILE_PATHS[1], FILE_PATHS[2], FILE_PATHS[3],
+                                         FILE_PATHS[4])
         end
       end
       context 'when using the interactive finder' do
@@ -89,9 +67,9 @@ describe 'Crf Finder' do
           repetitions = interactive_finder.search_repeated_files
           expect(repetitions.length).to eq(1)
           repetitions = repetitions.values.first
-          expect(repetitions).not_to include(file_paths[0], file_paths[5])
-          expect(repetitions).to include(file_paths[1], file_paths[2], file_paths[3],
-                                         file_paths[4])
+          expect(repetitions).not_to include(FILE_PATHS[0], FILE_PATHS[5])
+          expect(repetitions).to include(FILE_PATHS[1], FILE_PATHS[2], FILE_PATHS[3],
+                                         FILE_PATHS[4])
         end
       end
     end

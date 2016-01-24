@@ -17,10 +17,9 @@ module Crf
     # Creates the Finder object with a directory where it will look for duplicate files.
     # Path is the string representation of the absolute path of the directory.
     #
-    def initialize(path, fast = false, exhaustive = false)
+    def initialize(path, fast = false)
       @path = path
       @fast = fast
-      @exhaustive = exhaustive
     end
 
     #
@@ -30,8 +29,6 @@ module Crf
       @repetitions = first_run
       return repetitions if repetitions.empty? || @fast
       @repetitions = second_run(repetitions)
-      return repetitions if repetitions.empty? || !@exhaustive
-      @repetitions = third_run(repetitions)
     end
 
     private
@@ -80,21 +77,8 @@ module Crf
       repetitions_list.repetitions
     end
 
-    #
-    # After finding files with the same size, perform a deeper analysis of those
-    #
-    def third_run(repetitions)
-      repetitions_list = Crf::RepetitionsList.new
-      repetitions.values.each do |repeated_array|
-      end
-      repetitions_list.repetitions
-    end
-
     def file_hash(path)
       Digest::SHA256.file(path).hexdigest
-    end
-
-    def compare_bytes(file_paths)
     end
   end
 end

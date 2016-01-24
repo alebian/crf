@@ -1,11 +1,7 @@
 require 'spec_helper'
 
-def delete_logger
-  File.delete('./spec/test_files/crf.log') if File.exist?('./spec/test_files/crf.log')
-end
-
 describe 'Crf' do
-  let!(:options) { { interactive: false, progress: false, fast: false, exhaustive: false } }
+  let!(:options) { { interactive: false, progress: false, fast: false } }
   let!(:checker) { Crf::Checker.new(test_files_directory, options) }
   let!(:test_files_directory) { './spec/test_files' }
   let!(:file_paths) do
