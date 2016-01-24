@@ -1,14 +1,23 @@
 require 'support/coverage'
 require 'crf'
 
-LOGGER_PATH = './spec/crf.log'
-FILE_DIRECTORIES = ['./spec/test_files', './spec/test_files/sub', './spec/test_files/sub/sub']
-FILE_PATHS = ["#{FILE_DIRECTORIES.first}/file_1.test", "#{FILE_DIRECTORIES.first}/file_2.test",
-              "#{FILE_DIRECTORIES.first}/file_3.test", "#{FILE_DIRECTORIES[1]}/file_4.test",
-              "#{FILE_DIRECTORIES[2]}/file_5.test", "#{FILE_DIRECTORIES.first}/file_6.test"]
-REPEATED_TEXT =  'This text will be in 4 files'
-UNIQUE_TEXT =    'This text will be in 1  file'
-SAME_SIZE_TEXT = 'This text has the same  size'
+LOGGER_PATH = './spec/crf.log'.freeze
+FILE_DIRECTORIES = [
+  './spec/test_files'.freeze,
+  './spec/test_files/sub'.freeze,
+  './spec/test_files/sub/sub'.freeze
+].freeze
+FILE_PATHS = [
+  "#{FILE_DIRECTORIES.first}/file_1.test".freeze,
+  "#{FILE_DIRECTORIES.first}/file_2.test".freeze,
+  "#{FILE_DIRECTORIES.first}/file_3.test".freeze,
+  "#{FILE_DIRECTORIES[1]}/file_4.test".freeze,
+  "#{FILE_DIRECTORIES[2]}/file_5.test".freeze,
+  "#{FILE_DIRECTORIES.first}/file_6.test.freeze".freeze
+].freeze
+REPEATED_TEXT =  'This text will be in 4 files'.freeze
+UNIQUE_TEXT =    'This text will be in 1  file'.freeze
+SAME_SIZE_TEXT = 'This text has the same  size'.freeze
 
 RSpec.configure do |config|
 end
