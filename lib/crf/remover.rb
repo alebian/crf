@@ -12,6 +12,9 @@ module Crf
     #
     # This object needs the repeated files obtained with Crf::Finder and the logger object.
     #
+    # @param repetitions [Hash] repetitions found by one of the finder classes.
+    # @param logger [Crf::Logger] logger file which this class will write.
+    #
     def initialize(repetitions, logger)
       @repetitions = repetitions
       @logger = logger

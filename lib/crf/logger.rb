@@ -8,6 +8,8 @@ module Crf
     #
     # Creates the logger with the configurations in the path provided or in the current directory
     #
+    # @param path [String] path where the logger is or will be created.
+    #
     def initialize(path = 'crf.log')
       @logger = ::Logger.new(path, File::CREAT)
       configurate_logger
@@ -15,6 +17,8 @@ module Crf
 
     #
     # Wrapper of the Logger info method
+    # Parameters:
+    # msg: message that this class will write as the text for the log.
     #
     def write(msg)
       @logger.info msg

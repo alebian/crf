@@ -22,6 +22,9 @@ module Crf
     # Adds an element to one of each hashes. If the value is repeated, then it erases it from
     # uniques and adds it in the repetitions hash along with the duplicate.
     #
+    # @param key result of the function that identifies the file
+    # @param value [String] path of the file
+    #
     def add(key, value)
       if repetitions.key?(key)
         repetitions[key] << value

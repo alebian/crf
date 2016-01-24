@@ -17,6 +17,9 @@ module Crf
     # Creates the Finder object with a directory where it will look for duplicate files.
     # Path is the string representation of the absolute path of the directory.
     #
+    # @param path [String] path of the root folder where the scan will start.
+    # @param fast [Boolean] boolean indicating if this class will make a fast scan or not.
+    #
     def initialize(path, fast = false)
       @path = path
       @fast = fast
