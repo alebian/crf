@@ -1,3 +1,4 @@
+require 'crf/version'
 require 'crf/finder'
 require 'crf/interactive_finder'
 require 'crf/remover'
@@ -54,9 +55,8 @@ module Crf
     end
 
     def remove_repetitions
-      remover = Crf::Remover.new(repetitions, logger) unless options[:interactive]
-      remover = Crf::InteractiveRemover.new(repetitions, logger) if options[:interactive]
-      remover.remove
+      return Crf::InteractiveRemover.new(repetitions, logger).remove if options[:interactive]
+      Crf::Remover.new(repetitions, logger).remove
     end
 
     def number_to_human_size(size)

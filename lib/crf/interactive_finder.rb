@@ -3,7 +3,6 @@ require 'ruby-progressbar'
 
 module Crf
   class InteractiveFinder < Crf::Finder
-
     def search_repeated_files
       all_paths = all_files(path)
       progressbar = ProgressBar.create(title: 'First run', total: all_paths.count,

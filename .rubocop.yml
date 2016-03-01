@@ -4,7 +4,7 @@ AllCops:
     - bin/crf
 
 Documentation:
-  Enabled: true
+  Enabled: false
 
 LineLength:
   Max: 99

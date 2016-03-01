@@ -2,7 +2,6 @@ require 'colorize'
 
 module Crf
   class InteractiveRemover < Crf::Remover
-
     def remove
       saved = 0
       repetitions.each_value do |paths|
