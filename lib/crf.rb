@@ -7,14 +7,7 @@ require 'crf/configuration'
 require 'colorize'
 
 module Crf
-  #
-  # This class is the Crf starting point.
-  #
   class Checker
-    #
-    # The path where it will look for repetitions, the options provided, the repetitions found
-    # and the logger files are accesible from the outside and used in the class.
-    #
     attr_reader :path, :options, :repetitions, :logger
 
     #
@@ -30,10 +23,6 @@ module Crf
       @logger = Crf::Logger.new
     end
 
-    #
-    # Starting point of Crf. You should call this if you want to check if a directory has
-    # duplicated files inside.
-    #
     def check_repeated_files
       find_repetitions
       return no_repetitions_found if repetitions.empty?

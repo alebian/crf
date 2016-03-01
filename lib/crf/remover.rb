@@ -1,12 +1,5 @@
 module Crf
-  #
-  # This class removes all the repetitions passed as an argument.
-  # It saves the first element of the repetitions and deletes the rest.
-  #
   class Remover
-    #
-    # The repetitions hash and the logger file are accessible from the outside.
-    #
     attr_reader :repetitions, :logger
 
     #
@@ -22,7 +15,7 @@ module Crf
 
     #
     # This method removes all the files contained on each value of the repetitions hash
-    # except the first one. This is done without asking the user for confirmation so be careful.
+    # except the first one. This is done without asking the user for confirmation.
     #
     def remove
       saved = 0

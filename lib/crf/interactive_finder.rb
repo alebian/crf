@@ -2,15 +2,8 @@ require 'crf/repetitions_list'
 require 'ruby-progressbar'
 
 module Crf
-  #
-  # This class finds the paths of all the repeated files inside the path passed as argument.
-  # All files repeated have the same file_identifier and file_hash.
-  #
   class InteractiveFinder < Crf::Finder
-    #
-    # Method that looks for the repeated files in the path specified when the object was created
-    # showing progress bars.
-    #
+
     def search_repeated_files
       all_paths = all_files(path)
       progressbar = ProgressBar.create(title: 'First run', total: all_paths.count,
@@ -22,9 +15,6 @@ module Crf
 
     private
 
-    #
-    # This looks for the files with the same size only
-    #
     def first_run(progressbar)
       repetitions_list = Crf::RepetitionsList.new
       all_files(path).each do |file_path|

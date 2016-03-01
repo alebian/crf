@@ -1,17 +1,7 @@
 module Crf
-  #
-  # This is the data structure used to get the repeated files.
-  #
   class RepetitionsList
-    #
-    # The uniques and repetitions hashes can be accessed from the outside, along with the
-    # total repetitions count.
-    #
     attr_reader :uniques, :repetitions, :total_repetitions
 
-    #
-    # Creates the RepetitionsList object with everything it needs.
-    #
     def initialize
       @uniques = {}
       @repetitions = {}

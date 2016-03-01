@@ -1,9 +1,6 @@
 require 'logger'
 
 module Crf
-  #
-  # This class is a wrapper of the Logger class, it hanldes the creation and sets the configuration
-  #
   class Logger
     #
     # Creates the logger with the configurations in the path provided or in the current directory
@@ -15,13 +12,8 @@ module Crf
       configurate_logger
     end
 
-    #
-    # Wrapper of the Logger info method
-    # Parameters:
-    # msg: message that this class will write as the text for the log.
-    #
-    def write(msg)
-      @logger.info msg
+    def write(message)
+      @logger.info message
     end
 
     private
@@ -29,8 +21,8 @@ module Crf
     def configurate_logger
       @logger.datetime_format = Crf::LOGGER_DATE_TIME_FORMAT
       @logger.progname = Crf::GEM_NAME
-      @logger.formatter = proc do |_severity, datetime, progname, msg|
-        "[#{datetime}] #{progname}: #{msg}\n"
+      @logger.formatter = proc do |severity, date_time, program_name, message|
+        "[#{date_time}] #{program_name}: #{message}\n"
       end
     end
   end

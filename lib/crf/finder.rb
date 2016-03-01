@@ -3,14 +3,7 @@ require 'digest'
 require 'ruby-progressbar'
 
 module Crf
-  #
-  # This class finds the paths of all the repeated files inside the path passed as argument.
-  # All files repeated have the same file_identifier and file_hash.
-  #
   class Finder
-    #
-    # The original path provided and the list of files inside it are accessible from the outside.
-    #
     attr_reader :path, :paths, :repetitions
 
     #
@@ -25,9 +18,6 @@ module Crf
       @fast = fast
     end
 
-    #
-    # Method that looks for the repeated files in the path specified when the object was created.
-    #
     def search_repeated_files
       @repetitions = first_run
       return repetitions if repetitions.empty? || @fast
@@ -36,18 +26,12 @@ module Crf
 
     private
 
-    #
-    # Gets all file paths in the given directory and subdirectories.
-    #
     def all_files(path)
       @paths = []
       Dir["#{path.chomp('/')}/**/*"].each { |p| paths << p.freeze if file?(p) }
       paths
     end
 
-    #
-    # Checks if the file is not a symlink or a directory.
-    #
     def file?(path)
       !File.directory?(path) && !File.symlink?(path)
     end
