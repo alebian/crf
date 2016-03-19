@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in crf.gemspec
 gemspec
 
-gem 'rake', '~> 10.0'
+gem 'rake', '~> 11.1'
 gem 'rspec', '~> 3.4'
 
 group :test do

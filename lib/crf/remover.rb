@@ -32,13 +32,11 @@ module Crf
 
     def remove_file(path)
       size = File.size(path)
-      begin
-        File.delete(path)
-        log_removal(path, size)
-        return size
-      rescue
-        return 0
-      end
+      File.delete(path)
+      log_removal(path, size)
+      return size
+    rescue
+      return 0
     end
 
     def log_removal(path, size)
