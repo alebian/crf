@@ -2,7 +2,7 @@ module Crf
   class Remover
     attr_reader :repetitions, :logger
 
-    #
+    ##
     # This object needs the repeated files obtained with Crf::Finder and the logger object.
     #
     # @param repetitions [Hash] repetitions found by one of the finder classes.
@@ -13,7 +13,7 @@ module Crf
       @logger = logger
     end
 
-    #
+    ##
     # This method removes all the files contained on each value of the repetitions hash
     # except the first one. This is done without asking the user for confirmation.
     #

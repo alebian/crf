@@ -6,7 +6,7 @@ module Crf
   class Finder
     attr_reader :path, :paths, :repetitions
 
-    #
+    ##
     # Creates the Finder object with a directory where it will look for duplicate files.
     # Path is the string representation of the absolute path of the directory.
     #
@@ -26,17 +26,18 @@ module Crf
 
     private
 
-    def all_files(path)
-      @paths = []
-      Dir["#{path.chomp('/')}/**/*"].each { |p| paths << p.freeze if file?(p) }
-      paths
+    def all_files(root_path)
+      @paths = Dir["#{root_path.chomp('/')}/**/*"].each_with_object([]) do |path, array|
+        array << path.freeze if file?(path)
+        array
+      end
     end
 
     def file?(path)
       !File.directory?(path) && !File.symlink?(path)
     end
 
-    #
+    ##
     # This looks for the files with the same size only
     #
     def first_run
@@ -51,7 +52,7 @@ module Crf
       File.size(path).to_s
     end
 
-    #
+    ##
     # After finding files with the same size, perform a deeper analysis of those
     #
     def second_run(repetitions)

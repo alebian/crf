@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'crf'
+require 'crf/version'
 require 'optparse'
 
 options = { interactive: true, progress: true, fast: false }
@@ -20,6 +21,11 @@ parser = OptionParser.new do |opts|
     options[:progress] = false
   end
 
+  opts.on('-v', '--version', 'Displays version') do
+    puts "CRF Version: #{Crf::VERSION}"
+    exit
+  end
+
   opts.on('-h', '--help', 'Displays help') do
     puts opts
     exit
@@ -28,7 +34,7 @@ end
 
 parser.parse!
 
-if !ARGV[0].nil? && File.directory?(ARGV[0])
+if ARGV[0] && File.directory?(ARGV[0])
   Crf::Checker.new(ARGV[0], options).check_repeated_files
 else
   STDOUT.puts 'No directory specified.'

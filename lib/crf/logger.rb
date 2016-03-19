@@ -2,7 +2,7 @@ require 'logger'
 
 module Crf
   class Logger
-    #
+    ##
     # Creates the logger with the configurations in the path provided or in the current directory
     #
     # @param path [String] path where the logger is or will be created.

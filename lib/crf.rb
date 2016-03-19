@@ -34,12 +34,15 @@ module Crf
 
     def find_repetitions
       logger.write "Looking for repetitions in #{path}"
-      finder = if options[:progress]
-                 Crf::InteractiveFinder.new(path, options[:fast])
-               else
-                 Crf::Finder.new(path, options[:fast])
-               end
       @repetitions = finder.search_repeated_files
+    end
+
+    def finder
+      unless instance_variable_defined?(:@finder)
+        @finder = Crf::InteractiveFinder.new(path, options[:fast]) if options[:progress]
+        @finder = Crf::Finder.new(path, options[:fast]) unless options[:progress]
+      end
+      @finder
     end
 
     def no_repetitions_found

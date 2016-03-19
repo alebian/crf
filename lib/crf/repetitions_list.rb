@@ -8,7 +8,7 @@ module Crf
       @total_repetitions = 0
     end
 
-    #
+    ##
     # Adds an element to one of each hashes. If the value is repeated, then it erases it from
     # uniques and adds it in the repetitions hash along with the duplicate.
     #
