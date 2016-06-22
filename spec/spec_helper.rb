@@ -19,16 +19,13 @@ REPEATED_TEXT =  'This text will be in 4 files'.freeze
 UNIQUE_TEXT =    'This text will be in 1  file'.freeze
 SAME_SIZE_TEXT = 'This text has the same  size'.freeze
 
-RSpec.configure do |config|
-end
-
 def delete_logger
   File.delete('./spec/test_files/crf.log') if File.exist?('./spec/test_files/crf.log')
 end
 
 def create_test_files
   FILE_DIRECTORIES.each do |dir|
-    Dir.mkdir(dir) unless File.exist?(dir)
+    Dir.mkdir(dir) unless Dir.exist?(dir)
   end
   File.open(FILE_PATHS[0], 'w+') { |file| file.write(UNIQUE_TEXT) }
   (1..4).each do |index|

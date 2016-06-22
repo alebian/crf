@@ -11,7 +11,7 @@ describe 'Crf' do
 
   before do
     FileUtils.rm_rf(test_files_directory) if File.exist?(test_files_directory)
-    Dir.mkdir(test_files_directory) unless File.exist?(test_files_directory)
+    Dir.mkdir(test_files_directory) unless Dir.exist?(test_files_directory)
     file_paths.each do |file_path|
       File.open(file_path, 'w+') { |file| file.write(repeated_text) }
     end
