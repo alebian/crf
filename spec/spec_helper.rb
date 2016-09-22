@@ -2,18 +2,19 @@ require 'support/coverage'
 require 'crf'
 
 LOGGER_PATH = './spec/crf.log'.freeze
+ROOT_TEST_DIRECTORY = './spec/test_files'.freeze
 FILE_DIRECTORIES = [
-  './spec/test_files'.freeze,
+  ROOT_TEST_DIRECTORY,
   './spec/test_files/sub'.freeze,
   './spec/test_files/sub/sub'.freeze
 ].freeze
 FILE_PATHS = [
-  "#{FILE_DIRECTORIES.first}/file_1.test".freeze,
-  "#{FILE_DIRECTORIES.first}/file_2.test".freeze,
-  "#{FILE_DIRECTORIES.first}/file_3.test".freeze,
+  "#{ROOT_TEST_DIRECTORY}/file_1.test".freeze,
+  "#{ROOT_TEST_DIRECTORY}/file_2.test".freeze,
+  "#{ROOT_TEST_DIRECTORY}/file_3.test".freeze,
   "#{FILE_DIRECTORIES[1]}/file_4.test".freeze,
   "#{FILE_DIRECTORIES[2]}/file_5.test".freeze,
-  "#{FILE_DIRECTORIES.first}/file_6.test.freeze".freeze
+  "#{ROOT_TEST_DIRECTORY}/file_6.test.freeze".freeze
 ].freeze
 REPEATED_TEXT =  'This text will be in 4 files'.freeze
 UNIQUE_TEXT =    'This text will be in 1  file'.freeze

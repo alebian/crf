@@ -34,8 +34,11 @@ end
 
 parser.parse!
 
-if ARGV[0] && File.directory?(ARGV[0])
-  Crf::Checker.new(ARGV[0], options).check_repeated_files
+paths = []
+ARGV.each { |arg| paths << arg if File.directory?(arg) }
+
+unless paths.empty?
+  Crf::Checker.new(paths, options).check_repeated_files
 else
   STDOUT.puts 'No directory specified.'
 end

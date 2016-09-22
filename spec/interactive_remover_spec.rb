@@ -4,8 +4,8 @@ require 'stringio'
 
 describe 'Crf InteractiveRemover' do
   context 'when deleting files' do
-    let!(:finder) { Crf::Finder.new(FILE_DIRECTORIES.first) }
-    let!(:logger) { Crf::Logger.new("#{FILE_DIRECTORIES.first}/crf.log") }
+    let!(:finder) { Crf::Finder.new(FILE_DIRECTORIES) }
+    let!(:logger) { Crf::Logger.new("#{ROOT_TEST_DIRECTORY}/crf.log") }
 
     before :each do
       create_test_files
@@ -31,7 +31,7 @@ describe 'Crf InteractiveRemover' do
     end
 
     it 'does not remove unexisting files' do
-      path = "#{FILE_DIRECTORIES.first}/marta"
+      path = "#{ROOT_TEST_DIRECTORY}/marta"
       remover = Crf::InteractiveRemover.new({ 'null' => [path, path] }, logger)
       $stdin = StringIO.new("n\nn\n")
       expect(remover.remove).to be 0

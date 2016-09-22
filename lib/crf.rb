@@ -9,17 +9,17 @@ require 'colorize'
 
 module Crf
   class Checker
-    attr_reader :path, :options, :repetitions, :logger
+    attr_reader :paths, :options, :repetitions, :logger
 
     #
-    # Creates the object saving the directory's path and options provided. Options are set to
+    # Creates the object saving the paths and options provided. Options are set to
     # default if they are not given. It also creates the logger file.
     #
-    # @param path [String] path of the root folder where the scan will start
+    # @param path [Arsray] array of paths where the scan will start
     # @param options [Hash] hash indicating the options of the scan
     #
-    def initialize(path, options = { interactive: false, progress: false, fast: false })
-      @path = path
+    def initialize(paths, options = { interactive: false, progress: false, fast: false })
+      @paths = paths
       @options = options
       @logger = Crf::Logger.new
     end
@@ -33,14 +33,14 @@ module Crf
     private
 
     def find_repetitions
-      logger.write "Looking for repetitions in #{path}"
+      logger.write "Looking for repetitions in #{paths}"
       @repetitions = finder.search_repeated_files
     end
 
     def finder
       unless instance_variable_defined?(:@finder)
-        @finder = Crf::InteractiveFinder.new(path, options[:fast]) if options[:progress]
-        @finder = Crf::Finder.new(path, options[:fast]) unless options[:progress]
+        @finder = Crf::InteractiveFinder.new(paths, options[:fast]) if options[:progress]
+        @finder = Crf::Finder.new(paths, options[:fast]) unless options[:progress]
       end
       @finder
     end

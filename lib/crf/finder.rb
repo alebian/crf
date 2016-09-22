@@ -1,20 +1,21 @@
 require 'crf/repetitions_list'
 require 'digest'
 require 'ruby-progressbar'
+require 'byebug'
 
 module Crf
   class Finder
-    attr_reader :path, :paths, :repetitions
+    attr_reader :paths, :repetitions, :files
 
     ##
     # Creates the Finder object with a directory where it will look for duplicate files.
     # Path is the string representation of the absolute path of the directory.
     #
-    # @param path [String] path of the root folder where the scan will start.
+    # @param paths [Array] paths of the folders where the scan will start.
     # @param fast [Boolean] boolean indicating if this class will make a fast scan or not.
     #
-    def initialize(path, fast = false)
-      @path = path
+    def initialize(paths, fast = false)
+      @paths = paths
       @fast = fast
     end
 
@@ -26,11 +27,14 @@ module Crf
 
     private
 
-    def all_files(root_path)
-      @paths = Dir["#{root_path.chomp('/')}/**/*"].each_with_object([]) do |path, array|
-        array << path.freeze if file?(path)
-        array
+    def all_files
+      @files = []
+      paths.each do |path|
+        Dir["#{path.chomp('/')}/**/*"].each do |file_path|
+          @files << file_path.freeze if file?(file_path) && !@files.include?(file_path)
+        end
       end
+      @files
     end
 
     def file?(path)
@@ -42,7 +46,7 @@ module Crf
     #
     def first_run
       repetitions_list = Crf::RepetitionsList.new
-      all_files(path).each do |file_path|
+      all_files.each do |file_path|
         repetitions_list.add(file_identifier(file_path).freeze, file_path)
       end
       repetitions_list.repetitions
