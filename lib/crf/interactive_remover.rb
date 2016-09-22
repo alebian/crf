@@ -1,4 +1,5 @@
 require 'colorize'
+require 'pp'
 
 module Crf
   class InteractiveRemover < Crf::Remover
@@ -17,7 +18,7 @@ module Crf
 
     def print_all_paths(paths)
       STDOUT.puts 'Found this repetitions:'.green
-      STDOUT.puts paths.to_s.green
+      STDOUT.puts paths.pretty_inspect.green
     end
 
     def remove_confirmation(path)
