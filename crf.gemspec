@@ -23,6 +23,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'ruby-progressbar', '~> 1.7', '>= 1.7.0'
 
   spec.add_development_dependency 'bundler', '>= 1.3.0', '< 2.0'
-  spec.add_development_dependency 'byebug' if RUBY_VERSION >= '2.0.0'
+  spec.add_development_dependency 'byebug', '~> 9.0', '>= 9.0.5' if RUBY_VERSION >= '2.0.0'
   spec.add_development_dependency 'rubocop', '~> 0.38', '>= 0.37.2'
 end
