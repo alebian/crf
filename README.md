@@ -6,7 +6,7 @@
 [![Test Coverage](https://codeclimate.com/github/alebian/crf/badges/coverage.svg)](https://codeclimate.com/github/alebian/crf/coverage)
 [![Inline docs](http://inch-ci.org/github/alebian/crf.svg)](http://inch-ci.org/github/alebian/crf)
 
-This gem finds exact duplicate files inside a given directory and all sub directories. The result of the execution gets stored in a file called crf_log.txt. The execution time depends on the amount of files and each size, so be careful (or patient). You have options to run an approximated version of the algorithm which is faster but more inaccurate.
+This gem finds exact duplicate files inside given directories and all of each sub directories. The result of the execution gets stored in a file called crf_log.txt. The execution time depends on the amount of files and each size, so be careful (or patient). You have options to run an approximated version of the algorithm which is faster but more inaccurate.
 
 ## Installation
 
@@ -29,7 +29,7 @@ Or install it yourself as:
 After installing the gem, you can use it in your command line:
 
 ```
-crf PATH [-f] [-n] [-o]
+crf PATH_1 PATH_2 .. [-f] [-n] [-o]
 ```
 Or you can use it in any ruby code you want:
 
@@ -39,7 +39,7 @@ require 'crf'
 path = './test'
 options = { interactive: true, progress: true, fast: false }
 
-crf_checker = Crf::Checker.new(path, options)
+crf_checker = Crf::Checker.new([paths], options)
 crf_checker.check_repeated_files
 ```
 
