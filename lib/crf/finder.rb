@@ -1,7 +1,6 @@
 require 'crf/repetitions_list'
 require 'digest'
 require 'ruby-progressbar'
-require 'byebug'
 
 module Crf
   class Finder
