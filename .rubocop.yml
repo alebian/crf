@@ -11,3 +11,6 @@ LineLength:
 
 FrozenStringLiteralComment:
   Enabled: false
+
+BlockLength:
+  Enabled: false

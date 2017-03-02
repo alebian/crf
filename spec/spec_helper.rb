@@ -1,5 +1,6 @@
-require 'support/coverage'
 require 'crf'
+require 'simplecov'
+SimpleCov.start
 
 LOGGER_PATH = './spec/crf.log'.freeze
 ROOT_TEST_DIRECTORY = './spec/test_files'.freeze
