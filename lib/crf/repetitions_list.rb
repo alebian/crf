@@ -1,3 +1,5 @@
+require 'concurrent/atomic/semaphore'
+
 module Crf
   class RepetitionsList
     attr_reader :uniques, :repetitions, :total_repetitions
@@ -5,6 +7,7 @@ module Crf
     def initialize
       @uniques = {}
       @repetitions = {}
+      @semaphore = Concurrent::Semaphore.new(1)
       @total_repetitions = 0
     end
 
@@ -16,13 +19,16 @@ module Crf
     # @param value [String] path of the file
     #
     def add(key, value)
+      @semaphore.acquire
       if repetitions.key?(key)
         repetitions[key] << value
         @total_repetitions += 1
-        return
+      elsif uniques.key?(key)
+        repetition_found(key, value)
+      else
+        uniques[key] = value
       end
-      return repetition_found(key, value) if uniques.key?(key)
-      uniques[key] = value
+      @semaphore.release
     end
 
     private

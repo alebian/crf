@@ -5,8 +5,7 @@ module Crf
   class InteractiveFinder < Crf::Finder
     def search_repeated_files
       all_paths = all_files
-      progressbar = ProgressBar.create(title: 'First run', total: all_paths.count,
-                                       format: '%t: %c/%C %a |%B| %%%P')
+      progressbar = initialize_progress_bar('First run', all_paths.count)
       rep_list = first_run(progressbar)
       return @repetitions = rep_list.repetitions if rep_list.repetitions.empty? || @fast
       second_run(rep_list)
@@ -23,17 +22,26 @@ module Crf
       repetitions_list
     end
 
+    # rubocop:disable Metrics/MethodLength
     def second_run(repetitions_list)
-      progressbar = ProgressBar.create(title: 'Second run', format: '%t: %c/%C %a |%B| %%%P',
-                                       total: repetitions_list.total_repetitions)
+      progressbar = initialize_progress_bar('Second run', repetitions_list.total_repetitions)
       confirmed_repetitions_list = Crf::RepetitionsList.new
+
       repetitions_list.repetitions.values.each do |repeated_array|
         repeated_array.each do |file_path|
-          confirmed_repetitions_list.add(file_hash(file_path), file_path)
-          progressbar.increment
+          @thread_pool.post do
+            confirmed_repetitions_list.add(file_hash(file_path), file_path)
+            progressbar.increment
+          end
         end
       end
+      await_pool_termination
+
       @repetitions = confirmed_repetitions_list.repetitions
+    end
+
+    def initialize_progress_bar(title, total)
+      ProgressBar.create(title: title, format: '%t: %c/%C %a |%B| %%%P', total: total)
     end
   end
 end

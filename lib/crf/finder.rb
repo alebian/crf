@@ -1,8 +1,7 @@
 require 'crf/repetitions_list'
 require 'digest'
 require 'ruby-progressbar'
-require 'concurrent/array'
-require 'concurrent/executor/fixed_thread_pool'
+require 'concurrent/executor/cached_thread_pool'
 
 module Crf
   class Finder
@@ -18,7 +17,7 @@ module Crf
     def initialize(paths, fast = false)
       @paths = paths
       @fast = fast
-      @max_threads = 16
+      initialize_thread_pool
     end
 
     def search_repeated_files
@@ -63,26 +62,29 @@ module Crf
     #
     def second_run(repetitions)
       repetitions_list = Crf::RepetitionsList.new
-      files_hashes = Concurrent::Array.new
-      thread_pool = Concurrent::FixedThreadPool.new(@max_threads)
 
       repetitions.values.each do |repeated_array|
         repeated_array.each do |file_path|
-          thread_pool.post { files_hashes << [file_hash(file_path), file_path] }
+          @thread_pool.post { repetitions_list.add(file_hash(file_path), file_path) }
         end
       end
-      thread_pool.shutdown
-      thread_pool.wait_for_termination
-
-      files_hashes.each do |hash_path|
-        repetitions_list.add(hash_path[0], hash_path[1])
-      end
+      await_pool_termination
 
       repetitions_list.repetitions
     end
 
     def file_hash(path)
       Digest::SHA256.file(path).hexdigest
+    end
+
+    def await_pool_termination
+      @thread_pool.shutdown
+      @thread_pool.wait_for_termination
+      initialize_thread_pool
+    end
+
+    def initialize_thread_pool
+      @thread_pool = Concurrent::CachedThreadPool.new
     end
   end
 end
