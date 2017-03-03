@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Crf::Logger do
-  subject(:logger) { described_class.new(LOGGER_PATH) }
+  let!(:logger) { described_class.new(LOGGER_PATH) }
 
   it 'creates the logger' do
     expect(File.exist?(LOGGER_PATH)).to be_truthy
