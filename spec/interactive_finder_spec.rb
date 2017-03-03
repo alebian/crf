@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Crf::Finder do
+describe Crf::InteractiveFinder do
   before do
     FileUtils.rm_rf(ROOT_TEST_DIRECTORY) if File.exist?(ROOT_TEST_DIRECTORY)
   end

@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe 'Crf' do
-  let!(:options) { { interactive: false, progress: false, fast: false } }
-  let!(:checker) { Crf::Checker.new(test_files_directories, options) }
-  let!(:test_files_directories) { ['./spec/test_files'] }
-  let!(:file_paths) do
+describe Crf::Checker do
+  subject(:checker) { described_class.new(test_files_directories, options) }
+  let(:options) { { interactive: false, progress: false, fast: false } }
+  let(:test_files_directories) { ['./spec/test_files'] }
+  let(:file_paths) do
     ["#{test_files_directories[0]}/file_1.test", "#{test_files_directories[0]}/file_2.test"]
   end
-  let!(:repeated_text) { 'This text will be in 2 files' }
+  let(:repeated_text) { 'This text will be in 2 files' }
 
   before do
     test_files_directories.each do |directory|

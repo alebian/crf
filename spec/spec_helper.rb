@@ -1,6 +1,7 @@
-require 'crf'
 require 'simplecov'
 SimpleCov.start
+require 'crf'
+require 'byebug'
 
 LOGGER_PATH = './spec/crf.log'.freeze
 ROOT_TEST_DIRECTORY = './spec/test_files'.freeze
@@ -10,12 +11,12 @@ FILE_DIRECTORIES = [
   './spec/test_files/sub/sub'.freeze
 ].freeze
 FILE_PATHS = [
-  "#{ROOT_TEST_DIRECTORY}/file_1.test".freeze,
-  "#{ROOT_TEST_DIRECTORY}/file_2.test".freeze,
-  "#{ROOT_TEST_DIRECTORY}/file_3.test".freeze,
-  "#{FILE_DIRECTORIES[1]}/file_4.test".freeze,
-  "#{FILE_DIRECTORIES[2]}/file_5.test".freeze,
-  "#{ROOT_TEST_DIRECTORY}/file_6.test.freeze".freeze
+  "#{ROOT_TEST_DIRECTORY}/file_1.txt".freeze,
+  "#{ROOT_TEST_DIRECTORY}/file_2.txt".freeze,
+  "#{ROOT_TEST_DIRECTORY}/file_3.txt".freeze,
+  "#{FILE_DIRECTORIES[1]}/file_4.txt".freeze,
+  "#{FILE_DIRECTORIES[2]}/file_5.txt".freeze,
+  "#{ROOT_TEST_DIRECTORY}/file_6.txt".freeze
 ].freeze
 REPEATED_TEXT =  'This text will be in 4 files'.freeze
 UNIQUE_TEXT =    'This text will be in 1  file'.freeze
