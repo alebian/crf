@@ -9,7 +9,7 @@ module Crf
     #
     def initialize(path = 'crf.log')
       @logger = ::Logger.new(path, File::CREAT)
-      configurate_logger
+      configure_logger
     end
 
     def write(message)
@@ -18,7 +18,7 @@ module Crf
 
     private
 
-    def configurate_logger
+    def configure_logger
       @logger.datetime_format = Crf::LOGGER_DATE_TIME_FORMAT
       @logger.progname = Crf::GEM_NAME
       @logger.formatter = proc do |_severity, date_time, program_name, message|

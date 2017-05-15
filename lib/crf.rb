@@ -15,7 +15,7 @@ module Crf
     # Creates the object saving the paths and options provided. Options are set to
     # default if they are not given. It also creates the logger file.
     #
-    # @param path [Arsray] array of paths where the scan will start
+    # @param paths [Array] array of paths where the scan will start
     # @param options [Hash] hash indicating the options of the scan
     #
     def initialize(paths, options = { interactive: false, progress: false, fast: false })

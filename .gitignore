@@ -1,6 +1,8 @@
 
 # Created by https://www.gitignore.io/api/ruby,osx
 
+.idea/**/*
+
 *.log
 .byebug_history
 /spec/test_files
