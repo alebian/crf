@@ -5,6 +5,7 @@
 [![Code Climate](https://codeclimate.com/github/alebian/crf/badges/gpa.svg)](https://codeclimate.com/github/alebian/crf)
 [![Test Coverage](https://codeclimate.com/github/alebian/crf/badges/coverage.svg)](https://codeclimate.com/github/alebian/crf/coverage)
 [![Inline docs](http://inch-ci.org/github/alebian/crf.svg)](http://inch-ci.org/github/alebian/crf)
+[![Open Source Helpers](https://www.codetriage.com/alebian/crf/badges/users.svg)](https://www.codetriage.com/alebian/crf)
 
 This gem finds exact duplicate files inside given directories and all of each sub directories. The result of the execution gets stored in a file called crf_log.txt. The execution time depends on the amount of files and each size, so be careful (or patient). You have options to run an approximated version of the algorithm which is faster but more inaccurate.
 
